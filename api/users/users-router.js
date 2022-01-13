@@ -3,7 +3,6 @@ const express = require('express');
 // You will need `users-model.js` and `posts-model.js` both
 // The middleware functions also need to be required
 const { 
-  logger, 
   validateUserId, 
   validateUser, 
   validatePost 
@@ -12,7 +11,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // RETURN AN ARRAY WITH ALL THE USERS
-  logger()
+
    res.status(200).json()
 });
 
