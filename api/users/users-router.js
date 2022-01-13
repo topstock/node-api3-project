@@ -10,6 +10,7 @@ const {
   validateUser, 
   validatePost,
 } = require('../middleware/middleware');
+const { Router } = require('express');
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', validateUserId, (req, res) => {
   // RETURN THE USER OBJECT
   // this needs a middleware to verify user id
-  res.status(200).json({ message: req.user});
+  res.status(200).json(req.user);
 });
 
 router.post('/', validateUser, async (req, res) => {
@@ -51,15 +52,16 @@ router.delete('/:id', validateUserId, async (req, res) => {
 router.get('/:id/posts', validateUserId, async (req, res) => {
   // RETURN THE ARRAY OF USER POSTS
   // this needs a middleware to verify user id
-  const userPosts = await Posts.getById(req.params.id);
+  const userPosts = await Users.getUserPosts(req.params.id);
   res.status(200).json(userPosts);
 });
 
-router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
+router.post('/:id/posts', validateUserId, validatePost, async (req, res) => {
   // RETURN THE NEWLY CREATED USER POST
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
- 
+  const newPost = await Posts.insert({...req.body, user_id: req.params.id });
+  res.status(200).json(newPost);
 });
 
 // do not forget to export the router
