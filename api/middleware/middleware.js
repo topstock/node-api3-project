@@ -28,6 +28,7 @@ function validateUser(req, res, next) {
   // // DO YOUR MAGIC
   // - `validateUser` validates the `body` on a request to create or update a user
   // - if the request `body` lacks the required `name` field, respond with status `400` and `{ message: "missing required name field" }`
+  console.log(req.body.name);
   if (req.body.name) {
     next();
   } else {
@@ -40,7 +41,7 @@ function validatePost(req, res, next) {
   // - `validatePost` validates the `body` on a request to create a new post
   // - if the request `body` lacks the required `text` field, respond with status `400` and `{ message: "missing required text field" }`
   if (req.body.text) {
-    next()
+    next();
   } else {
     res.status(400).json({ message: "missing required text field" });
   }
